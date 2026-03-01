@@ -1,0 +1,65 @@
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#1e1e2f;
+    color:white;
+    padding:20px;
+}
+
+.container{
+    max-width:800px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.form-section{
+    background:#2a2a40;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+input, textarea{
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    border:none;
+    border-radius:5px;
+}
+
+button{
+    padding:10px 20px;
+    background:#00adb5;
+    border:none;
+    color:white;
+    cursor:pointer;
+    border-radius:5px;
+}
+
+button:hover{
+    background:#007b83;
+}
+
+.post{
+    background:#2a2a40;
+    padding:15px;
+    margin-top:20px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+.post h3{
+    margin-bottom:10px;
+}
+
+.actions button{
+    margin-right:10px;
+}
+
+.delete-btn{
+    background:#ff4c4c;
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .product {
+            background: white;
+            padding: 30px;
+            width: 350px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .product img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .price {
+            color: #00adb5;
+            font-size: 22px;
+            margin: 10px 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #00adb5;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: #007b83;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="product">
+        <img src="https://via.placeholder.com/300">
+        <h2>Wireless Headphones</h2>
+        <p class="price">₹1999</p>
+        <p>Premium sound quality with noise cancellation and long battery life.</p>
+        <button onclick="addToCart()">Add to Cart</button>
+        <p id="msg"></p>
+    </div>
+
+    <script>
+        function addToCart() {
+            document.getElementById("msg").innerText = "✔ Added to Cart!";
+        }
+    </script>
+
+</body>
+
+</html>

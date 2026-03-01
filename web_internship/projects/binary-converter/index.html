@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> BinaryHub | Converter & Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        :root {
+            --primary-color: #00ff90;
+            --secondary-color: #4a00e0;
+            --bg-gradient: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(0, 0, 0, 0.95));
+            --card-gradient: linear-gradient(45deg, rgba(74, 0, 224, 0.1), rgba(0, 255, 144, 0.1));
+            --glow-shadow: 0 0 20px rgba(0, 255, 144, 0.3);
+        }
+
+        @keyframes binaryRain {
+            0% {
+                transform: translateY(-50%);
+            }
+
+            100% {
+                transform: translateY(50%);
+            }
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: var(--bg-gradient);
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background: repeating-linear-gradient(180deg,
+                    transparent 0,
+                    transparent 50px,
+                    rgba(0, 255, 144, 0.1) 50px,
+                    rgba(0, 255, 144, 0.1) 100px);
+            animation: binaryRain 20s linear infinite;
+        }
+
+        body::after {
+            content: "01";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+            line-height: 20px;
+            color: rgba(0, 255, 144, 0.1);
+            white-space: pre-wrap;
+            animation: binaryRain 15s linear infinite;
+            background:
+                repeating-linear-gradient(90deg,
+                    transparent 0px,
+                    transparent 40px,
+                    rgba(0, 255, 144, 0.05) 40px,
+                    rgba(0, 255, 144, 0.05) 80px),
+                repeating-linear-gradient(180deg,
+                    transparent 0px,
+                    transparent 20px,
+                    rgba(0, 255, 144, 0.05) 20px,
+                    rgba(0, 255, 144, 0.05) 40px);
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: none;
+                opacity: 1;
+            }
+
+            7% {
+                transform: skew(-0.5deg, -0.9deg);
+                opacity: 0.75;
+            }
+
+            10% {
+                transform: none;
+                opacity: 1;
+            }
+
+            27% {
+                transform: none;
+                opacity: 1;
+            }
+
+            30% {
+                transform: skew(0.8deg, -0.1deg);
+                opacity: 0.75;
+            }
+
+            35% {
+                transform: none;
+                opacity: 1;
+            }
+
+            52% {
+                transform: none;
+                opacity: 1;
+            }
+
+            55% {
+                transform: skew(-1deg, 0.2deg);
+                opacity: 0.75;
+            }
+
+            50% {
+                transform: none;
+                opacity: 1;
+            }
+
+            72% {
+                transform: none;
+                opacity: 1;
+            }
+
+            75% {
+                transform: skew(0.4deg, 1deg);
+                opacity: 0.75;
+            }
+
+            80% {
+                transform: none;
+                opacity: 1;
+            }
+
+            100% {
+                transform: none;
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .header-container {
+            background: var(--card-gradient);
+            padding: 25px;
+            margin: 0;
+            border-bottom: 2px solid var(--primary-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(0, 255, 144, 0.2),
+                    transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            to {
+                left: 200%;
+            }
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px var(--primary-color);
+            margin: 0;
+            animation: glitch 5s infinite;
+            position: relative;
+        }
+
+        .header-subtitle {
+            font-size: 0.7em;
+            display: block;
+            margin-top: 10px;
+            color: #fff;
+            text-transform: none;
+            letter-spacing: 5px;
+            opacity: 0.9;
+        }
+
+        .binary-decoration {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            color: rgba(0, 255, 144, 0.2);
+            font-size: 0.8em;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .binary-left {
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .binary-right {
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .header-subtitle span {
+            display: inline-block;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .header-subtitle span:hover {
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .header-subtitle span::before {
+            content: attr(data-text);
+            position: absolute;
+            left: -2px;
+            text-shadow: 3px 3px var(--secondary-color);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+
+        .header-subtitle span:hover::before {
+            opacity: 0.3;
+            transform: scale(1);
+        }
+
+        .container {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            padding: 20px;
+        }
+
+        .card {
+            background: var(--card-gradient);
+            padding: 30px;
+            border-radius: 20px;
+            width: 320px;
+            box-shadow: var(--glow-shadow);
+            border: 1px solid rgba(0, 255, 144, 0.2);
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(0, 255, 144, 0.4);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        input,
+        select {
+            padding: 12px;
+            width: 90%;
+            margin: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--primary-color);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            transition: all 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            box-shadow: 0 0 15px var(--primary-color);
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        button {
+            padding: 12px 25px;
+            width: 90%;
+            margin: 15px 10px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 255, 144, 0.5);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-shadow: 0 0 5px var(--primary-color);
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .history-card {
+            background: var(--card-gradient);
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            margin: 40px auto;
+            box-shadow: var(--glow-shadow);
+            border: 1px solid rgba(0, 255, 144, 0.2);
+        }
+
+        .history-list {
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+            padding: 15px;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) rgba(0, 0, 0, 0.3);
+        }
+
+        .history-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .history-list::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+
+        .history-list::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .history-item {
+            padding: 15px;
+            border-bottom: 1px solid rgba(0, 255, 144, 0.2);
+            margin: 8px 0;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .history-item:hover {
+            background: rgba(0, 255, 144, 0.1);
+            transform: translateX(5px);
+        }
+
+        .clear-history {
+            background: linear-gradient(45deg, #ff4444, #ff0000);
+            color: white;
+            width: auto;
+            padding: 10px 25px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        .clear-history:hover {
+            background: linear-gradient(45deg, #ff0000, #ff4444);
+        }
+
+        /* Binary rain container */
+        .binary-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .binary-column {
+            position: absolute;
+            top: -20px;
+            color: rgba(0, 255, 144, 0.2);
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+            line-height: 20px;
+            white-space: nowrap;
+            animation: rain linear infinite;
+        }
+
+        @keyframes rain {
+            from {
+                transform: translateY(-100%);
+            }
+
+            to {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="binary-rain"></div>
+    <script>
+        // Create dynamic binary rain effect
+        function createBinaryRain() {
+            const container = document.querySelector('.binary-rain');
+            const width = window.innerWidth;
+            const columns = Math.floor(width / 20); // 20px per column
+
+            for (let i = 0; i < columns; i++) {
+                const column = document.createElement('div');
+                column.className = 'binary-column';
+                column.style.left = i * 20 + 'px';
+                column.style.animationDuration = Math.random() * 10 + 5 + 's'; // Random speed between 5-15s
+                column.style.animationDelay = Math.random() * 5 + 's'; // Random delay up to 5s
+                container.appendChild(column);
+
+                // Generate random binary string
+                setInterval(() => {
+                    column.textContent = Array(Math.floor(Math.random() * 20) + 10)
+                        .fill(0)
+                        .map(() => Math.round(Math.random()))
+                        .join('');
+                }, 1000);
+            }
+        }
+
+        // Initialize binary rain on page load
+        window.addEventListener('load', createBinaryRain);
+
+        // Recreate rain effect on window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                const container = document.querySelector('.binary-rain');
+                container.innerHTML = '';
+                createBinaryRain();
+            }, 300);
+        });
+    </script>
+
+    <div class="header-container">
+        <div class="binary-decoration binary-left">01<br>10<br>01</div>
+        <h1>
+            <span class="header-main">Binary System Converter</span>
+            <span class="header-subtitle">
+                <span data-text="Converter">Converter</span> •
+                <span data-text="Calculator">Calculator</span> •
+                <span data-text="Gray Code">Gray Code</span>
+            </span>
+        </h1>
+        <div class="binary-decoration binary-right">10<br>01<br>10</div>
+    </div>
+    <div class="container">
+        <!-- Gray Code Section -->
+        <div class="card">
+            <h2>Gray Code Conversion</h2>
+            <input type="text" id="grayInput" placeholder="Enter binary/gray code">
+            <select id="grayOperation">
+                <option value="binaryToGray">Binary to Gray</option>
+                <option value="grayToBinary">Gray to Binary</option>
+            </select>
+            <button onclick="convertGrayCode()">Convert</button>
+            <div id="grayResult" class="result"></div>
+        </div>
+
+        <!-- Conversion Section -->
+        <div class="card">
+            <h2>Number System Conversion</h2>
+            <input type="text" id="numInput" placeholder="Enter number">
+            <select id="fromBase">
+                <option value="2">Binary</option>
+                <option value="8">Octal</option>
+                <option value="10">Decimal</option>
+                <option value="16">Hexadecimal</option>
+            </select>
+            <select id="toBase">
+                <option value="2">Binary</option>
+                <option value="8">Octal</option>
+                <option value="10">Decimal</option>
+                <option value="16">Hexadecimal</option>
+            </select>
+            <button onclick="convert()">Convert</button>
+            <div id="convResult" class="result"></div>
+        </div>
+
+        <!-- Arithmetic Section -->
+        <div class="card">
+            <h2>Binary Arithmetic Operations</h2>
+            <input type="text" id="bin1" placeholder="Enter 1st Binary (e.g., 1010.11)">
+            <input type="text" id="bin2" placeholder="Enter 2nd Binary (e.g., -101.01)">
+            <select id="operation">
+                <option value="add">Addition</option>
+                <option value="sub">Subtraction</option>
+                <option value="mul">Multiplication</option>
+                <option value="div">Division</option>
+            </select>
+            <button onclick="binaryOperation()">Calculate</button>
+            <div id="arthResult" class="result"></div>
+        </div>
+
+        <!-- Unsigned Binary Section -->
+        <div class="card">
+            <h2>Unsigned Binary Operations</h2>
+            <div class="info-text" style="font-size: 0.8em; margin-bottom: 15px; color: rgba(255,255,255,0.7);">
+                Input numbers in binary or decimal format
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                <input type="text" id="unsignedBin1" placeholder="Enter 1st number" style="flex: 1;">
+                <select id="input1Type" style="width: auto;">
+                    <option value="binary">Binary</option>
+                    <option value="decimal">Decimal</option>
+                </select>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                <input type="text" id="unsignedBin2" placeholder="Enter 2nd number" style="flex: 1;">
+                <select id="input2Type" style="width: auto;">
+                    <option value="binary">Binary</option>
+                    <option value="decimal">Decimal</option>
+                </select>
+            </div>
+            <select id="unsignedOperation">
+                <option value="add">Addition</option>
+                <option value="sub">Subtraction</option>
+                <option value="mul">Multiplication</option>
+                <option value="div">Division</option>
+                <option value="and">AND</option>
+                <option value="or">OR</option>
+                <option value="xor">XOR</option>
+                <option value="leftShift">Left Shift</option>
+                <option value="rightShift">Right Shift</option>
+            </select>
+            <button onclick="unsignedBinaryOperation()">Calculate</button>
+            <div id="unsignedSteps" class="result"
+                style="text-align: left; font-family: monospace; white-space: pre-wrap;"></div>
+            <div id="unsignedResult" class="result"></div>
+        </div>
+
+        <!-- Booth's Algorithm Section -->
+        <div class="card">
+            <h2>Booth's Multiplication</h2>
+            <div class="info-text" style="font-size: 0.8em; margin-bottom: 15px; color: rgba(255,255,255,0.7);">
+                For signed multiplication using Booth's algorithm — supports binary and decimal inputs
+            </div>
+            <div style="display:flex; gap:8px; align-items:center; justify-content:center; flex-wrap:wrap;">
+                <div style="display:flex; flex-direction:column; align-items:flex-start">
+                    <label style="font-size:0.8em">Multiplicand (M)</label>
+                    <input type="text" id="boothM" placeholder="Enter M">
+                </div>
+                <div style="display:flex; flex-direction:column; align-items:flex-start">
+                    <label style="font-size:0.8em">Type</label>
+                    <select id="boothMType">
+                        <option value="binary">Binary</option>
+                        <option value="decimal">Decimal</option>
+                    </select>
+                </div>
+                <div style="display:flex; flex-direction:column; align-items:flex-start">
+                    <label style="font-size:0.8em">Multiplier (Q)</label>
+                    <input type="text" id="boothQ" placeholder="Enter Q">
+                </div>
+                <div style="display:flex; flex-direction:column; align-items:flex-start">
+                    <label style="font-size:0.8em">Type</label>
+                    <select id="boothQType">
+                        <option value="binary">Binary</option>
+                        <option value="decimal">Decimal</option>
+                    </select>
+                </div>
+            </div>
+            <button onclick="boothMultiplication()">Multiply</button>
+            <div id="boothSteps" class="result"
+                style="text-align: left; font-family: monospace; white-space: pre-wrap;"></div>
+            <div id="boothResult" class="result"></div>
+        </div>
+
+        <!-- 1's and 2's Complement Calculator -->
+        <div class="card">
+            <h2>1's & 2's Complement</h2>
+            <div style="font-size:0.85em; color: rgba(255,255,255,0.8); margin-bottom:10px;">
+                Enter a binary number (no sign). The tool will compute 1's and 2's complement.
+            </div>
+            <input type="text" id="compInput" placeholder="Enter binary (e.g., 101101)">
+            <select id="compOperation">
+                <option value="ones">1's Complement</option>
+                <option value="twos">2's Complement</option>
+            </select>
+            <button onclick="calculateComplement()">Compute</button>
+            <div id="compResult" class="result" style="word-break:break-all;"></div>
+        </div>
+
+    </div>
+
+    <!-- History Section -->
+    <div class="history-card">
+        <h2>Conversion History</h2>
+        <button class="clear-history" onclick="clearHistory()">Clear History</button>
+        <div id="historyList" class="history-list">
+            <!-- History items will be added here -->
+        </div>
+    </div>
+
+    <script>
+        // Initialize history from localStorage and CLEAR it as requested
+        let conversionHistory = JSON.parse(localStorage.getItem('conversionHistory') || '[]');
+        // Clear existing history (user requested to clear history)
+        localStorage.setItem('conversionHistory', JSON.stringify([]));
+        conversionHistory = [];
+
+        // Display (now cleared) history on page load
+        window.onload = function () {
+            displayHistory();
+        }
+
+        function addToHistory(operation, input, result) {
+            const timestamp = new Date().toLocaleString();
+            conversionHistory.unshift({
+                timestamp,
+                operation,
+                input,
+                result
+            });
+
+            // Keep only last 50 entries
+            if (conversionHistory.length > 50) {
+                conversionHistory.pop();
+            }
+
+            // Save to localStorage
+            localStorage.setItem('conversionHistory', JSON.stringify(conversionHistory));
+            displayHistory();
+        }
+
+        function displayHistory() {
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = conversionHistory.map(item => `
+                <div class="history-item">
+                    <strong>${item.operation}</strong><br>
+                    Input: ${item.input}<br>
+                    Result: ${item.result}<br>
+                    <small>${item.timestamp}</small>
+                </div>
+            `).join('');
+        }
+
+        function clearHistory() {
+            conversionHistory = [];
+            localStorage.setItem('conversionHistory', JSON.stringify(conversionHistory));
+            displayHistory();
+        }
+
+        function convertGrayCode() {
+            let input = document.getElementById("grayInput").value.trim();
+            let operation = document.getElementById("grayOperation").value;
+
+            if (!/^[01]+$/.test(input)) {
+                document.getElementById("grayResult").innerHTML = "Please enter a valid binary number!";
+                return;
+            }
+
+            let result;
+            if (operation === "binaryToGray") {
+                result = binaryToGray(input);
+                document.getElementById("grayResult").innerHTML =
+                    `Gray Code: ${result}`;
+                addToHistory("Binary to Gray", input, result);
+            } else {
+                result = grayToBinary(input);
+                document.getElementById("grayResult").innerHTML =
+                    `Binary: ${result}`;
+                addToHistory("Gray to Binary", input, result);
+            }
+        }
+
+        function binaryToGray(binary) {
+            let result = binary[0];  // First bit remains same
+            for (let i = 1; i < binary.length; i++) {
+                // XOR current bit with previous bit
+                result += (parseInt(binary[i]) ^ parseInt(binary[i - 1])).toString();
+            }
+            return result;
+        }
+
+        function grayToBinary(gray) {
+            let result = gray[0];  // First bit remains same
+            let bin = parseInt(gray[0]);
+            for (let i = 1; i < gray.length; i++) {
+                // XOR all bits from MSB to current bit
+                bin = bin ^ parseInt(gray[i]);
+                result += bin.toString();
+            }
+            return result;
+        }
+
+        function decimalToBinary(decimal) {
+            if (decimal === 0) return "0";
+
+            let sign = decimal < 0 ? "-" : "";
+            decimal = Math.abs(decimal);
+
+            // Handle integer part
+            let intPart = Math.floor(decimal);
+            let fracPart = decimal - intPart;
+
+            // Convert integer part to binary
+            let intBinary = intPart > 0 ? intPart.toString(2) : "0";
+
+            // Convert fractional part to binary with 8-bit precision
+            let fracBinary = "";
+            const precision = 8;
+            while (fracPart > 0 && fracBinary.length < precision) {
+                fracPart *= 2;
+                fracBinary += Math.floor(fracPart);
+                fracPart -= Math.floor(fracPart);
+            }
+
+            return fracBinary ? `${sign}${intBinary}.${fracBinary}` : `${sign}${intBinary}`;
+        }
+
+        function binaryToDecimal(binary) {
+            if (!/^-?[01]+\.?[01]*$/.test(binary)) throw "Invalid binary number";
+
+            let sign = 1;
+            if (binary.startsWith('-')) {
+                sign = -1;
+                binary = binary.substring(1);
+            }
+
+            let parts = binary.split('.');
+            let intPart = parts[0];
+            let fracPart = parts[1] || "";
+
+            // Convert integer part
+            let decimal = parseInt(intPart, 2);
+
+            // Convert fractional part
+            let fraction = 0;
+            for (let i = 0; i < fracPart.length; i++) {
+                fraction += parseInt(fracPart[i]) * Math.pow(2, -(i + 1));
+            }
+
+            return sign * (decimal + fraction);
+        }
+
+        function convert() {
+            let num = document.getElementById("numInput").value.trim();
+            let from = parseInt(document.getElementById("fromBase").value);
+            let to = parseInt(document.getElementById("toBase").value);
+
+            try {
+                let result;
+                if (from === 2 && to === 10) {
+                    result = binaryToDecimal(num).toString();
+                } else if (from === 10 && to === 2) {
+                    result = decimalToBinary(parseFloat(num));
+                } else {
+                    // For other bases, use standard conversion
+                    if (num.includes('.')) {
+                        throw "Floating point only supported for binary-decimal conversion";
+                    }
+                    let decimal = parseInt(num, from);
+                    if (isNaN(decimal)) throw "Invalid Input!";
+                    result = decimal.toString(to).toUpperCase();
+                }
+
+                document.getElementById("convResult").innerHTML = `Result: ${result}`;
+                const bases = { 2: 'Binary', 8: 'Octal', 10: 'Decimal', 16: 'Hexadecimal' };
+                addToHistory(`${bases[from]} to ${bases[to]}`, num, result);
+            } catch (e) {
+                document.getElementById("convResult").innerHTML = e.toString();
+            }
+        }
+
+        function binaryOperation() {
+            let a = document.getElementById("bin1").value.trim();
+            let b = document.getElementById("bin2").value.trim();
+            let op = document.getElementById("operation").value;
+
+            if (!/^-?[01]+\.?[01]*$/.test(a) || !/^-?[01]+\.?[01]*$/.test(b)) {
+                document.getElementById("arthResult").innerHTML = "Enter valid binary numbers (can include decimal point and negative sign)!";
+                return;
+            }
+
+            try {
+                let n1 = binaryToDecimal(a);
+                let n2 = binaryToDecimal(b);
+                let result;
+
+                switch (op) {
+                    case 'add': result = n1 + n2; break;
+                    case 'sub': result = n1 - n2; break;
+                    case 'mul': result = n1 * n2; break;
+                    case 'div':
+                        if (n2 === 0) {
+                            document.getElementById("arthResult").innerHTML = "Cannot divide by zero!";
+                            return;
+                        }
+                        result = n1 / n2;
+                        break;
+                }
+
+                const binaryResult = decimalToBinary(result);
+                const decimalResult = result.toFixed(4); // Show 4 decimal places for clarity
+                document.getElementById("arthResult").innerHTML =
+                    `Binary Result: ${binaryResult}<br>Decimal: ${decimalResult}`;
+                const operations = { add: '+', sub: '-', mul: '×', div: '÷' };
+                addToHistory(`Binary ${operations[op]}`, `${a} ${operations[op]} ${b}`, `${binaryResult} (${decimalResult})`);
+            } catch (e) {
+                document.getElementById("arthResult").innerHTML = e.toString();
+            }
+
+        }
+
+        function padZeros(binary, length) {
+            return binary.padStart(length, '0');
+        }
+
+        function twosComplement(binary) {
+            // First, pad to ensure proper length
+            let result = '';
+            let found = false;
+
+            // Read from right to left
+            for (let i = binary.length - 1; i >= 0; i--) {
+                if (!found) {
+                    // Copy bits until and including first 1
+                    result = binary[i] + result;
+                    if (binary[i] === '1') found = true;
+                } else {
+                    // Flip the remaining bits
+                    result = (binary[i] === '0' ? '1' : '0') + result;
+                }
+            }
+            return result;
+        }
+
+        // 1's complement helper
+        function onesComplement(binary) {
+            if (!/^[01]+$/.test(binary)) throw 'Input must be a binary string with 0s and 1s only';
+            return binary.split('').map(b => b === '0' ? '1' : '0').join('');
+        }
+
+        // UI handler to compute selected complement and show result
+        function calculateComplement() {
+            try {
+                const input = document.getElementById('compInput').value.trim();
+                const op = document.getElementById('compOperation').value;
+                if (!/^[01]+$/.test(input)) {
+                    document.getElementById('compResult').innerHTML = 'Please enter a valid binary string (0/1 only).';
+                    return;
+                }
+
+                if (op === 'ones') {
+                    const ones = onesComplement(input);
+                    document.getElementById('compResult').innerHTML = `1's Complement: ${ones}`;
+                    addToHistory("1's Complement", input, ones);
+                } else {
+                    // 2's complement: invert and add 1
+                    const ones = onesComplement(input);
+                    // add 1 to ones (binary addition)
+                    let carry = 1;
+                    let twos = '';
+                    for (let i = ones.length - 1; i >= 0; i--) {
+                        let bit = parseInt(ones[i]) + carry;
+                        if (bit === 2) {
+                            twos = '0' + twos;
+                            carry = 1;
+                        } else {
+                            twos = bit.toString() + twos;
+                            carry = 0;
+                        }
+                    }
+                    if (carry === 1) twos = '1' + twos; // extend if needed
+                    document.getElementById('compResult').innerHTML = `2's Complement: ${twos}`;
+                    addToHistory("2's Complement", input, twos);
+                }
+            } catch (e) {
+                document.getElementById('compResult').innerHTML = e.toString();
+            }
+        }
+
+        function validateAndConvertInput(value, type) {
+            if (type === "binary") {
+                if (!/^[01]+$/.test(value)) {
+                    throw "Binary numbers must contain only 0s and 1s";
+                }
+                return {
+                    decimal: parseInt(value, 2),
+                    binary: value
+                };
+            } else { // decimal
+                if (!/^\d+$/.test(value)) {
+                    throw "Decimal numbers must contain only digits";
+                }
+                const decimal = parseInt(value, 10);
+                if (decimal < 0) {
+                    throw "Please enter a positive number for unsigned operations";
+                }
+                return {
+                    decimal: decimal,
+                    binary: decimal.toString(2)
+                };
+            }
+        }
+
+        function unsignedBinaryOperation() {
+            let a = document.getElementById("unsignedBin1").value.trim();
+            let b = document.getElementById("unsignedBin2").value.trim();
+            let input1Type = document.getElementById("input1Type").value;
+            let input2Type = document.getElementById("input2Type").value;
+            let op = document.getElementById("unsignedOperation").value;
+            let steps = [];
+
+            try {
+                // Convert and validate both inputs
+                let num1 = validateAndConvertInput(a, input1Type);
+                let num2 = op === "leftShift" || op === "rightShift" ?
+                    { decimal: parseInt(b), binary: b } :
+                    validateAndConvertInput(b, input2Type);
+
+                let result;
+                let n1 = num1.decimal;
+                let n2 = num2.decimal;
+
+                steps.push(`Input Numbers:`);
+                steps.push(`A = ${num1.binary} (${n1} in decimal)`);
+                if (op !== "leftShift" && op !== "rightShift") {
+                    steps.push(`B = ${num2.binary} (${n2} in decimal)`);
+                } else {
+                    steps.push(`Shift amount = ${b}`);
+                }
+                steps.push(``);
+
+                switch (op) {
+                    case 'add':
+                        result = n1 + n2;
+                        steps.push(`Addition Process:`);
+                        steps.push(padZeros(num1.binary, Math.max(num1.binary.length, num2.binary.length)));
+                        steps.push(padZeros(num2.binary, Math.max(num1.binary.length, num2.binary.length)));
+                        steps.push("-".repeat(Math.max(num1.binary.length, num2.binary.length)));
+                        steps.push(result.toString(2));
+                        break;
+
+                    case 'sub':
+                        if (n2 > n1) {
+                            throw "In unsigned binary, the subtrahend must be smaller than or equal to the minuend";
+                        }
+                        result = n1 - n2;
+                        steps.push(`Subtraction Process:`);
+                        steps.push(padZeros(num1.binary, Math.max(num1.binary.length, num2.binary.length)));
+                        steps.push(padZeros(num2.binary, Math.max(num1.binary.length, num2.binary.length)));
+                        steps.push("-".repeat(Math.max(num1.binary.length, num2.binary.length)));
+                        steps.push(result.toString(2));
+                        break;
+
+                    case 'mul':
+                        result = n1 * n2;
+                        steps.push(`Multiplication Process:`);
+                        // Show standard binary multiplication steps
+                        let mulSteps = standardBinaryMultiplication(num1.binary, num2.binary);
+                        steps = steps.concat(mulSteps);
+                        break;
+
+                    case 'div':
+                        if (n2 === 0) {
+                            throw "Cannot divide by zero";
+                        }
+                        result = Math.floor(n1 / n2);
+                        let remainder = n1 % n2;
+                        steps.push(`Division Process:`);
+                        steps.push(`Dividend: ${num1.binary} (${n1})`);
+                        steps.push(`Divisor:  ${num2.binary} (${n2})`);
+                        steps.push(`Quotient: ${result.toString(2)} (${result})`);
+                        steps.push(`Remainder: ${remainder.toString(2)} (${remainder})`);
+                        break;
+
+                    case 'and':
+                        result = n1 & n2;
+                        steps.push(`AND Operation:`);
+                        steps.push(padZeros(num1.binary, Math.max(num1.binary.length, num2.binary.length)));
+                        steps.push(padZeros(num2.binary, Math.max(num1.binary.length, num2.binary.length)));
+                        steps.push("-".repeat(Math.max(num1.binary.length, num2.binary.length)));
+                        steps.push(result.toString(2));
+                        break;
+
+                    case 'or':
+                        result = n1 | n2;
+                        steps.push(`OR Operation:`);
+                        steps.push(padZeros(num1.binary, Math.max(num1.binary.length, num2.binary.length)));
+                        steps.push(padZeros(num2.binary, Math.max(num1.binary.length, num2.binary.length)));
+                        steps.push("-".repeat(Math.max(num1.binary.length, num2.binary.length)));
+                        steps.push(result.toString(2));
+                        break;
+
+                    case 'xor':
+                        result = n1 ^ n2;
+                        steps.push(`XOR Operation:`);
+                        steps.push(padZeros(num1.binary, Math.max(num1.binary.length, num2.binary.length)));
+                        steps.push(padZeros(num2.binary, Math.max(num1.binary.length, num2.binary.length)));
+                        steps.push("-".repeat(Math.max(num1.binary.length, num2.binary.length)));
+                        steps.push(result.toString(2));
+                        break;
+
+                    case 'leftShift':
+                        result = n1 << n2;
+                        steps.push(`Left Shift Operation:`);
+                        steps.push(`Original:    ${num1.binary} (${n1})`);
+                        steps.push(`Shift left ${n2} positions`);
+                        steps.push(`Result:      ${result.toString(2)} (${result})`);
+                        break;
+
+                    case 'rightShift':
+                        result = n1 >>> n2;
+                        steps.push(`Right Shift Operation:`);
+                        steps.push(`Original:    ${num1.binary} (${n1})`);
+                        steps.push(`Shift right ${n2} positions`);
+                        steps.push(`Result:      ${result.toString(2)} (${result})`);
+                        break;
+                }
+
+                document.getElementById("unsignedSteps").innerHTML = steps.join('\n');
+                document.getElementById("unsignedResult").innerHTML =
+                    `Result: ${result.toString(2)}<br>Decimal: ${result}`;
+
+                // Add to history
+                const operations = {
+                    add: '+', sub: '-', mul: '×', div: '÷',
+                    and: 'AND', or: 'OR', xor: 'XOR',
+                    leftShift: '<<', rightShift: '>>'
+                };
+                addToHistory(
+                    `Unsigned Binary ${operations[op]}`,
+                    `${a} ${operations[op]} ${b}`,
+                    `${result.toString(2)} (${result})`
+                );
+
+            } catch (e) {
+                document.getElementById("unsignedResult").innerHTML = e.toString();
+                document.getElementById("unsignedSteps").innerHTML = '';
+            }
+        }
+
+        function standardBinaryMultiplication(a, b) {
+            let steps = [];
+            let partialProducts = [];
+            let maxLength = a.length + b.length;
+
+            // Generate partial products
+            for (let i = b.length - 1; i >= 0; i--) {
+                if (b[i] === '1') {
+                    let product = parseInt(a, 2) * Math.pow(2, b.length - 1 - i);
+                    partialProducts.push(product.toString(2).padStart(maxLength, '0'));
+                }
+            }
+
+            // Show the multiplication process
+            steps.push(`   ${a}`);
+            steps.push(` × ${b}`);
+            steps.push("-".repeat(maxLength));
+
+            // Add partial products
+            partialProducts.forEach(product => {
+                steps.push(product);
+            });
+
+            if (partialProducts.length > 1) {
+                steps.push("-".repeat(maxLength));
+                let finalResult = partialProducts.reduce((sum, curr) =>
+                    (parseInt(sum, 2) + parseInt(curr, 2)).toString(2)
+                );
+                steps.push(finalResult.padStart(maxLength, '0'));
+            }
+
+            return steps;
+        }
+
+
+        function boothMultiplication() {
+            try {
+                // Read inputs and types (support decimal or binary)
+                let Mraw = document.getElementById("boothM").value.trim();
+                let Qraw = document.getElementById("boothQ").value.trim();
+                const mType = document.getElementById("boothMType") ? document.getElementById("boothMType").value : 'binary';
+                const qType = document.getElementById("boothQType") ? document.getElementById("boothQType").value : 'binary';
+
+                // Prepare binary representations (two's complement for decimals)
+                let mDec, qDec;
+                if (mType === 'decimal') {
+                    if (!/^-?\d+$/.test(Mraw)) throw 'Invalid decimal for M';
+                    mDec = parseInt(Mraw, 10);
+                }
+                if (qType === 'decimal') {
+                    if (!/^-?\d+$/.test(Qraw)) throw 'Invalid decimal for Q';
+                    qDec = parseInt(Qraw, 10);
+                }
+
+                // Determine bit width: max bits for absolute values + 1 sign bit
+                const mAbsBits = (mType === 'decimal') ? (Math.max(1, Math.abs(mDec).toString(2).length)) : Mraw.replace(/^-/, '').length;
+                const qAbsBits = (qType === 'decimal') ? (Math.max(1, Math.abs(qDec).toString(2).length)) : Qraw.replace(/^-/, '').length;
+                const maxLength = Math.max(mAbsBits, qAbsBits) + 1;
+
+                let M, Q;
+                // Build M
+                if (mType === 'decimal') {
+                    if (mDec >= 0) M = padZeros(mDec.toString(2), maxLength);
+                    else {
+                        const absBin = padZeros(Math.abs(mDec).toString(2), maxLength);
+                        M = twosComplement(absBin);
+                    }
+                } else {
+                    if (!/^-?[01]+$/.test(Mraw)) throw 'Invalid binary for M';
+                    M = padZeros(Mraw.replace(/^\-/, ''), maxLength);
+                    // assume user-supplied binary is already two's complement if negative
+                    if (Mraw.startsWith('-')) M = twosComplement(M);
+                }
+
+                // Build Q
+                if (qType === 'decimal') {
+                    if (qDec >= 0) Q = padZeros(qDec.toString(2), maxLength);
+                    else {
+                        const absBin = padZeros(Math.abs(qDec).toString(2), maxLength);
+                        Q = twosComplement(absBin);
+                    }
+                } else {
+                    if (!/^-?[01]+$/.test(Qraw)) throw 'Invalid binary for Q';
+                    Q = padZeros(Qraw.replace(/^\-/, ''), maxLength);
+                    if (Qraw.startsWith('-')) Q = twosComplement(Q);
+                }
+
+                let steps = [];
+                steps.push("Booth's Algorithm Steps:\n");
+                steps.push(`Input:`);
+                steps.push(`  Raw M = ${Mraw} (type: ${mType})`);
+                if (mType === 'decimal') {
+                    steps.push(`  M -> binary (padded ${maxLength} bits) = ${M}` + (mDec < 0 ? ` (two's complement of ${Math.abs(mDec)})` : ``));
+                } else {
+                    steps.push(`  M (binary, padded ${maxLength} bits) = ${M}`);
+                }
+                steps.push(`  Raw Q = ${Qraw} (type: ${qType})`);
+                if (qType === 'decimal') {
+                    steps.push(`  Q -> binary (padded ${maxLength} bits) = ${Q}` + (qDec < 0 ? ` (two's complement of ${Math.abs(qDec)})` : ``));
+                } else {
+                    steps.push(`  Q (binary, padded ${maxLength} bits) = ${Q}`);
+                }
+                steps.push('');
+                steps.push(`Initial values:`);
+                steps.push(`M  = ${M} (Multiplicand)`);
+                steps.push(`Q  = ${Q} (Multiplier)\n`);
+
+                // Initialize variables
+                let A = '0'.repeat(maxLength);  // Accumulator
+                let Q_1 = '0';  // Extra bit
+                let count = maxLength;
+
+                steps.push("Start of algorithm:");
+
+                // Main algorithm loop
+                while (count > 0) {
+                    steps.push(`\nStep ${maxLength - count + 1}:`);
+                    steps.push(`A = ${A}, Q = ${Q}, Q₋₁ = ${Q_1}`);
+
+                    // Look at the least significant bit of Q and Q_1
+                    const QQ_1 = Q[Q.length - 1] + Q_1;
+                    steps.push(`  Q₀Q₋₁ = ${QQ_1}`);
+
+                    if (QQ_1 === '10') {
+                        // Subtract M from A
+                        steps.push(`  Operation: A = A - M`);
+                        let temp = '';
+                        let borrow = 0;
+                        for (let i = maxLength - 1; i >= 0; i--) {
+                            let diff = parseInt(A[i]) - parseInt(M[i]) - borrow;
+                            if (diff < 0) {
+                                diff += 2;
+                                borrow = 1;
+                            } else {
+                                borrow = 0;
+                            }
+                            temp = diff.toString() + temp;
+                        }
+                        A = temp;
+                        steps.push(`  After A - M: A = ${A}`);
+                    } else if (QQ_1 === '01') {
+                        // Add M to A
+                        steps.push(`  Operation: A = A + M`);
+                        let temp = '';
+                        let carry = 0;
+                        for (let i = maxLength - 1; i >= 0; i--) {
+                            let sum = parseInt(A[i]) + parseInt(M[i]) + carry;
+                            carry = sum > 1 ? 1 : 0;
+                            temp = (sum % 2).toString() + temp;
+                        }
+                        A = temp;
+                        steps.push(`  After A + M: A = ${A}`);
+                    } else {
+                        steps.push(`  Operation: No arithmetic operation`);
+                    }
+
+                    // Arithmetic right shift
+                    Q_1 = Q[Q.length - 1];
+                    Q = A[A.length - 1] + Q.substring(0, Q.length - 1);
+                    A = A[0] + A.substring(0, A.length - 1);
+                    steps.push(`  After shift: A = ${A}, Q = ${Q}, Q₋₁ = ${Q_1}`);
+
+                    count--;
+                }
+
+                const result = A + Q;
+                steps.push(`\nFinal Result: ${result}`);
+
+                // Convert to decimal considering two's complement
+                const signBit = result[0];
+                let decimalResult;
+                if (signBit === '1') {
+                    // If negative, take two's complement and negate
+                    const invertedBits = result.split('').map(b => b === '0' ? '1' : '0').join('');
+                    decimalResult = -(parseInt(invertedBits, 2) + 1);
+                } else {
+                    decimalResult = parseInt(result, 2);
+                }
+
+                document.getElementById("boothSteps").innerHTML = steps.join('\n');
+                document.getElementById("boothResult").innerHTML =
+                    `Result: ${result}<br>Decimal: ${decimalResult}`;
+
+                // Add to history
+                addToHistory("Booth's Multiplication",
+                    `${M} × ${Q}`,
+                    `${result} (${decimalResult})`);
+
+            } catch (e) {
+                document.getElementById("boothResult").innerHTML = e.toString();
+                document.getElementById("boothSteps").innerHTML = '';
+            }
+        }
+    </script>
+
+    <!-- Removed duplicate Unsigned Booth's Multiplication UI (user requested removal) -->
+
+</body>
+
+</html>
